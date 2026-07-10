@@ -37,37 +37,37 @@ from "learning"."public"."transactions" as t
 
 inner join "learning"."public"."members" as m
 
-	on t.member_id = m.member_id
+on t.member_id = m.member_id
 
 inner join "learning"."public"."prices" as p
 
-	on t.ticker = p.ticker
+on t.ticker = p.ticker
 	
-	and t.txn_date = p.market_date
+and t.txn_date = p.market_date
 	
 where t.ticker ilike ('%eth%')
 
 group by m.region,t.ticker
 
-	)
+)
 	
 select 
 
-	q.region,
+q.region,
 	
-	q.ticker,
+q.ticker,
 	
-	round(q.total_qty::numeric,2) as total_qty,
+round(q.total_qty::numeric,2) as total_qty,
 	
-	round((p.price * q.total_qty)::numeric,2) as total_value
+round((p.price * q.total_qty)::numeric,2) as total_value
 
 from quantity as q
 
 left join "learning"."public"."prices" as p
 
-	on q.ticker = p.ticker
+on q.ticker = p.ticker
 	
-	and market_date = '2021-08-29'
+and market_date = '2021-08-29'
 	
 order by total_value desc
 
